@@ -81,6 +81,13 @@ Then the player gets the profit from selling his own wasted time.
 	/// cost includes elasticity, this does not.
 	var/init_cost
 
+	/// Total amount of items sold.
+	var/total_stock
+	/// Total value of items sold.
+	var/total_stock_value
+	/// Stock drop-off.
+	var/stock_drop_off = 0.05
+
 
 
 /datum/export/New()
@@ -103,13 +110,7 @@ Then the player gets the profit from selling his own wasted time.
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, apply_elastic = TRUE)
 	var/amount = get_amount(O)
-	if(apply_elastic)
-		if(k_elasticity!=0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
-		else
-			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
-	else
-		return round(init_cost * amount)
+	return round(init_cost * amount)
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
@@ -138,7 +139,7 @@ Then the player gets the profit from selling his own wasted time.
  */
 /datum/export/proc/sell_object(obj/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
-	var/export_value = get_cost(sold_item, apply_elastic)
+	var/export_value = get_cost(sold_item)
 	///Quantity of the object in question.
 	var/export_amount = get_amount(sold_item)
 
@@ -150,14 +151,18 @@ Then the player gets the profit from selling his own wasted time.
 	if(!dry_run)
 		export_result = SEND_SIGNAL(sold_item, COMSIG_ITEM_EXPORTED, src, report, export_value)
 
+	var/demand_integral = -(cost)*(1/stock_drop_off)*NUM_E**(-(stock_drop_off * total_stock))
+	var/demand_integral_and_ship = -(cost)*(1/stock_drop_off)*NUM_E**(-(stock_drop_off * (total_stock+(export_amount * amount_report_multiplier))))
+	var/return_rate = demand_integral_and_ship - demand_integral
+
 	// If the signal handled adding it to the report, don't do it now
 	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
-		report.total_value[src] += export_value
+		report.total_value[src] += return_rate
 		report.total_amount[src] += export_amount * amount_report_multiplier
 
 	if(!dry_run)
-		if(apply_elastic)
-			cost *= NUM_E**(-1 * k_elasticity * export_amount) //marginal cost modifier
+		total_stock += export_amount * amount_report_multiplier
+		total_stock_value += return_rate
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_item.type]", "[export_value]"))
 	return TRUE
 
