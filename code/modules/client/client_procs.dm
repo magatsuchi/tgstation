@@ -344,9 +344,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Initialize stat panel
 	stat_panel.initialize(
-		inline_html = file2text('html/statbrowser.html'),
-		inline_js = file2text('html/statbrowser.js'),
-		inline_css = file2text('html/statbrowser.css'),
+		inline_js = file("tgui/public/tgui-stat.bundle.js"),
+		inline_css = file("tgui/public/tgui-stat.bundle.css"),
 	)
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 

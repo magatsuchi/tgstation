@@ -183,6 +183,8 @@ export const TguiTarget = new Juke.Target({
     'tgui/public/tgui.bundle.js',
     'tgui/public/tgui-panel.bundle.css',
     'tgui/public/tgui-panel.bundle.js',
+    'tgui/public/tgui-stat.bundle.css',
+    'tgui/public/tgui-stat.bundle.js',
   ],
   executes: () => yarn('tgui:build'),
 });

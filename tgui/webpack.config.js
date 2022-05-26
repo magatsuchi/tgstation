@@ -40,6 +40,10 @@ module.exports = (env = {}, argv) => {
         './packages/tgui-polyfill',
         './packages/tgui-panel',
       ],
+      'tgui-stat': [
+        './packages/tgui-polyfill',
+        './packages/tgui-stat',
+      ],
     },
     output: {
       path: argv.useTmpFolder
