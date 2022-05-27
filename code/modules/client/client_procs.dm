@@ -347,6 +347,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_js = file("tgui/public/tgui-stat.bundle.js"),
 		inline_css = file("tgui/public/tgui-stat.bundle.css"),
 	)
+	
 	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 
 	// Initialize tgui panel

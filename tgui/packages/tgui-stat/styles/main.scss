@@ -5,12 +5,13 @@
 
 @use 'sass:meta';
 @use 'sass:color';
+@use 'sass:math';
 
 @use '~tgui/styles/colors.scss';
-@use '~tgui/styles/base.scss' with ($color-bg: #202020,
-	$color-bg-section: color.adjust(#202020, $lightness: -5%),
-	$color-bg-grad-spread: 0%,
+@use '~tgui/styles/base.scss' with ($color-bg: rgb(26, 26, 26),
 );
+
+$border-color: rgba(140, 140, 140, 0.5) !default;
 
 // Core styles
 @include meta.load-css('~tgui/styles/reset.scss');
@@ -46,6 +47,38 @@
 @include meta.load-css('~tgui/styles/components/Tooltip.scss');
 
 body {
-	background-color: #171717;
-	color: #a4bad6;
+	color: base.$color-fg;
+	background-color: base.$color-bg;
+	font-size: 16px;
+	font-family: 'tgfont', sans-serif;
+}
+
+.StatBrowser {
+	margin: 1.25em;
+	margin-top: 1em;
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	width: 100%;
+}
+
+.Ping {
+	position: absolute;
+	padding: 0.125em 0.25em;
+	border: math.div(1em, 12) solid $border-color;
+	border-radius: 0.25em;
+	width: 3.75em;
+	text-align: right;
+	margin-left: auto;
+}
+
+#Ping__indicator {
+	content: '';
+	position: absolute;
+	top: 0.5em;
+	left: 0.5em;
+	width: 0.5em;
+	height: 0.5em;
+	background-color: #888;
+	border-radius: 0.25em;
 }
