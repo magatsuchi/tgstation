@@ -46,6 +46,8 @@ $border-color: rgba(140, 140, 140, 0.5) !default;
 @include meta.load-css('~tgui/styles/components/TextArea.scss');
 @include meta.load-css('~tgui/styles/components/Tooltip.scss');
 
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
+
 body {
 	color: base.$color-fg;
 	background-color: base.$color-bg;
@@ -54,8 +56,7 @@ body {
 }
 
 .StatBrowser {
-	margin: 1.25em;
-	margin-top: 1em;
+	margin: 1em;
 	position: fixed;
 	top: 0px;
 	bottom: 0px;
@@ -63,13 +64,12 @@ body {
 }
 
 .Ping {
-	position: absolute;
+	position: relative;
 	padding: 0.125em 0.25em;
 	border: math.div(1em, 12) solid $border-color;
 	border-radius: 0.25em;
 	width: 3.75em;
 	text-align: right;
-	margin-left: auto;
 }
 
 #Ping__indicator {
@@ -81,4 +81,17 @@ body {
 	height: 0.5em;
 	background-color: #888;
 	border-radius: 0.25em;
+}
+
+.RoundTime {
+	color: rgba(146, 146, 146, 0.5);
+	font-family: 'Rajdhani', sans-serif;
+	font-size: 1.125em;
+}
+
+#RoundTime__time {
+	position: relative;
+	color: base.$color-fg;
+	font-size: 1.75em;
+	bottom: 8px;
 }

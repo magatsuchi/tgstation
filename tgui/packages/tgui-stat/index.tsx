@@ -1,5 +1,5 @@
 import { createRenderer } from 'tgui/renderer';
-import { Box, Button, Flex } from 'tgui/components';
+import { Box } from 'tgui/components';
 import { Color } from 'common/color';
 import { scale } from 'common/math';
 
@@ -17,12 +17,10 @@ const renderApp = createRenderer(() => {
         <Box id="Ping__text" />
         <Box id="Ping__indicator" />
       </div>
-      <Flex justify="flex-end">
-        <Flex.Item>
-          <Button>Admin</Button>
-          <Button>OOC</Button>
-        </Flex.Item>
-      </Flex>
+      <Box className="RoundTime" mt={1.5}>
+        Round time
+        <Box id="RoundTime__time" />
+      </Box>
     </Box>
   );
 });
@@ -54,12 +52,17 @@ const setupApp = () => {
   Byond.subscribeTo("update_stat", ({ global_data, ping_info, other_str }) => {
     let ping = document.getElementById("Ping__text");
     let ping_ind = document.getElementById("Ping__indicator");
+    let round_time = document.getElementById("RoundTime__time");
 
     if (ping !== null && ping_ind !== null) {
       networkQuality = 1 - scale(ping_info.current, 50, 200);
 
       ping_ind.style.backgroundColor = tweenPing();
       ping.textContent = ping_info.current; 
+    }
+    
+    if (round_time !== null) {
+      round_time.textContent = global_data.round_time;
     }
   });
 };

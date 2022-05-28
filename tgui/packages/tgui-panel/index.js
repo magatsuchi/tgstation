@@ -71,6 +71,10 @@ const setupApp = () => {
   // Re-render UI on store updates
   store.subscribe(renderApp);
 
+  window.set_theme = () => {
+    // do stuff
+  };
+
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
