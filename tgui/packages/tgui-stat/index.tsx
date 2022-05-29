@@ -21,6 +21,10 @@ const renderApp = createRenderer(() => {
         Round time
         <Box id="RoundTime__time" />
       </Box>
+      <Box className="CurrentMap">
+        Current map
+        <Box id="CurrentMap__map" />
+      </Box>
     </Box>
   );
 });
@@ -53,6 +57,7 @@ const setupApp = () => {
     let ping = document.getElementById("Ping__text");
     let ping_ind = document.getElementById("Ping__indicator");
     let round_time = document.getElementById("RoundTime__time");
+    let current_map = document.getElementById("CurrentMap__map");
 
     if (ping !== null && ping_ind !== null) {
       networkQuality = 1 - scale(ping_info.current, 50, 200);
@@ -63,6 +68,10 @@ const setupApp = () => {
     
     if (round_time !== null) {
       round_time.textContent = global_data.round_time;
+    }
+
+    if (current_map !== null) {
+      current_map.textContent = global_data.map;
     }
   });
 };

@@ -52,7 +52,7 @@ body {
 	color: base.$color-fg;
 	background-color: base.$color-bg;
 	font-size: 16px;
-	font-family: 'tgfont', sans-serif;
+	font-family: 'Rajdhani', sans-serif;
 }
 
 .StatBrowser {
@@ -85,7 +85,6 @@ body {
 
 .RoundTime {
 	color: rgba(146, 146, 146, 0.5);
-	font-family: 'Rajdhani', sans-serif;
 	font-size: 1.125em;
 }
 
@@ -93,5 +92,17 @@ body {
 	position: relative;
 	color: base.$color-fg;
 	font-size: 1.75em;
+	bottom: 8px;
+}
+
+.CurrentMap {
+	color: rgba(146, 146, 146, 0.5);
+	font-size: 1.125em;
+}
+
+#CurrentMap__map {
+	position: relative;
+	color: base.$color-fg;
+	font-size: 1.25em;
 	bottom: 8px;
 }
