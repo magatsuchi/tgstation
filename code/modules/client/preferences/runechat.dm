@@ -13,6 +13,11 @@
 	savefile_key = "see_rc_emotes"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/auto_punctuation
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "auto_punctuation"
+	savefile_identifier = PREFERENCE_PLAYER
+
 /datum/preference/numeric/max_chat_length
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "max_chat_length"

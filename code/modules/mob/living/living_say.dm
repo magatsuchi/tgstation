@@ -443,6 +443,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	message = capitalize(message)
 
+	if(client.prefs.read_preference(/datum/preference/toggle/auto_punctuation))
+		message = punctuate(message)
+
 	return message
 
 /mob/living/proc/radio(message, list/message_mods = list(), list/spans, language)

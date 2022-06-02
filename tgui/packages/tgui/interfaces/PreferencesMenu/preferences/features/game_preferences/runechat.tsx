@@ -21,6 +21,13 @@ export const see_rc_emotes: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const auto_punctuation: FeatureToggle = {
+  name: "Enable autopunctuation",
+  category: "RUNECHAT",
+  description: "Sentences will automatically be punctuated.",
+  component: CheckboxInput,
+};
+
 export const max_chat_length: FeatureNumeric = {
   name: "Max chat length",
   category: "RUNECHAT",

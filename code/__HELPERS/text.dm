@@ -327,11 +327,18 @@
 	return trim_left(trim_right(text))
 
 //Returns a string with the first element of the string capitalized.
-/proc/capitalize(t)
-	. = t
-	if(t)
-		. = t[1]
-		return uppertext(.) + copytext(t, 1 + length(.))
+/proc/capitalize(text)
+	. = text
+	if(text)
+		. = text[1]
+		return uppertext(.) + copytext(text, 1 + length(.))
+
+//Returns a string with a period inserted at the end if no other punctuation is present
+/proc/punctuate(text)
+	if(!GLOB.is_punctuation.Find(text[length(text)]))
+		text += "."
+
+	return text
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
