@@ -1,41 +1,30 @@
 import { createRenderer } from 'tgui/renderer';
 import { Box } from 'tgui/components';
-import { Color } from 'common/color';
-import { scale } from 'common/math';
+import { configureStore, StoreProvider } from 'tgui/store';
+import { useLocalState } from 'tgui/backend';
 
-// Styles
-import './styles/main.scss';
+const store = configureStore();
 
-let status_tab_parts = ["Loading.."];
 let current_tab = "Status";
-let networkQuality = 1;
+
+const Component = (props, context) => {
+  const [thing, setThing] = useLocalState(context, 'thing', 0);
+  return (
+    <Box
+      onClick={() => setThing(thing +1)}
+    >
+      Hi!
+    </Box>
+  );
+};
 
 const renderApp = createRenderer(() => {
   return (
-    <Box className="StatBrowser">
-      <div className="Ping">
-        <Box id="Ping__text" />
-        <Box id="Ping__indicator" />
-      </div>
-      <Box className="RoundTime" mt={1.5}>
-        Round time
-        <Box id="RoundTime__time" />
-      </Box>
-      <Box className="CurrentMap">
-        Current map
-        <Box id="CurrentMap__map" />
-      </Box>
-    </Box>
+    <StoreProvider store={store}>
+      <Component />
+    </StoreProvider>
   );
 });
-
-const tweenPing = () => {
-  return Color.lookup(networkQuality, [
-    new Color(220, 40, 40),
-    new Color(220, 200, 40),
-    new Color(60, 220, 40),
-  ]).toString();
-};
 
 const setupApp = () => {
   // Delay setup
@@ -44,36 +33,21 @@ const setupApp = () => {
     return;
   }
 
+  // Re-render UI on store updates
+  store.subscribe(renderApp);
+
+  // Dispatch incoming messages as store actions
+  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+
   // Make the panel visible
   Byond.winset('statbrowser', {
     'is-visible': true,
   });
 
+  // Set the initial tab
   Byond.sendMessage("Set-Tab", { tab: current_tab });
 
   renderApp();
-
-  Byond.subscribeTo("update_stat", ({ global_data, ping_info, other_str }) => {
-    let ping = document.getElementById("Ping__text");
-    let ping_ind = document.getElementById("Ping__indicator");
-    let round_time = document.getElementById("RoundTime__time");
-    let current_map = document.getElementById("CurrentMap__map");
-
-    if (ping !== null && ping_ind !== null) {
-      networkQuality = 1 - scale(ping_info.current, 50, 200);
-
-      ping_ind.style.backgroundColor = tweenPing();
-      ping.textContent = ping_info.current; 
-    }
-    
-    if (round_time !== null) {
-      round_time.textContent = global_data.round_time;
-    }
-
-    if (current_map !== null) {
-      current_map.textContent = global_data.map;
-    }
-  });
 };
 
 setupApp();
