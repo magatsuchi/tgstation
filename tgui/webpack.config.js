@@ -9,7 +9,7 @@ const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const { createBabelConfig } = require('./babel.config.js');
 
-const createStats = verbose => ({
+const createStats = (verbose) => ({
   assets: verbose,
   builtAt: verbose,
   cached: false,
@@ -24,6 +24,7 @@ const createStats = verbose => ({
   version: verbose,
 });
 
+// prettier-ignore
 module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
@@ -43,6 +44,10 @@ module.exports = (env = {}, argv) => {
       'tgui-stat': [
         './packages/tgui-polyfill',
         './packages/tgui-stat',
+      ],
+      'tgui-say': [
+        './packages/tgui-polyfill',
+        './packages/tgui-say',
       ],
     },
     output: {

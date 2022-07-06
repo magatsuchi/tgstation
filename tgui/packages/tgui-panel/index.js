@@ -90,7 +90,7 @@ const setupApp = () => {
   });
 
   // Resize the panel to match the non-browser output
-  Byond.winget('output').then(output => {
+  Byond.winget('output').then((output) => {
     Byond.winset('browseroutput', {
       'size': output.size,
     });
@@ -99,6 +99,7 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
+    // prettier-ignore
     module.hot.accept([
       './audio',
       './chat',

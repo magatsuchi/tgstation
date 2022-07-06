@@ -20,7 +20,15 @@ const COLOR_DARK_TEXT = '#a4bad6';
  * There's no way round it. We're essentially changing the skin by hand.
  * It's painful but it works, and is the way Lummox suggested.
  */
-export const setClientTheme = name => {
+export const setClientTheme = (name) => {
+  // Transmit once for fast updates and again in a little while in case we won
+  // the race against statbrowser init.
+  clearInterval(setClientThemeTimer);
+  Byond.command(`.output statbrowser:set_theme ${name}`);
+  setClientThemeTimer = setTimeout(() => {
+    Byond.command(`.output statbrowser:set_theme ${name}`);
+  }, 1500);
+
   if (name === 'light') {
     return Byond.winset({
       // Main windows
@@ -69,6 +77,8 @@ export const setClientTheme = name => {
       'asset_cache_browser.text-color': '#000000',
       'tooltip.background-color': 'none',
       'tooltip.text-color': '#000000',
+      'input.background-color': '#FFFFFF',
+      'input.text-color': '#000000',
     });
   }
   if (name === 'dark') {
@@ -119,6 +129,8 @@ export const setClientTheme = name => {
       'asset_cache_browser.text-color': COLOR_DARK_TEXT,
       'tooltip.background-color': COLOR_DARK_BG,
       'tooltip.text-color': COLOR_DARK_TEXT,
+      'input.background-color': COLOR_DARK_BG_DARKER,
+      'input.text-color': COLOR_DARK_TEXT,
     });
   }
 };

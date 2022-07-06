@@ -36,6 +36,7 @@
 	winset(src, "output", "is-disabled=1&is-visible=0")
 	winset(src, "browseroutput", "is-disabled=0;is-visible=1")
 
+<<<<<<< HEAD
 /**
  * reloads all current tgui_window instances
  * in the debug category, but not locked behind permissions
@@ -48,3 +49,12 @@
 	for(var/window in tgui_windows)
 		var/datum/tgui_window/path_window = tgui_windows[window]
 		path_window.reinitialize()
+=======
+/client/verb/refresh_tgui()
+	set name = "Refresh TGUI"
+	set category = "OOC"
+
+	for(var/window_id in tgui_windows)
+		var/datum/tgui_window/window = tgui_windows[window_id]
+		window.reinitialize()
+>>>>>>> 2f2a7c4c367e5b8ed89f78d620a70e8f6eb456cb
